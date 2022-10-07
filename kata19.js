@@ -19,24 +19,24 @@ const generateBoard = function() {
  * are positioned so that they attack each other.
  */
 const queenThreat = function(board) {
-
-  let threat = false;
-
   // find positions of queens, format: [[0, 5] [5, 0]]
   const positions = findQueens(board);
-
-  console.log(positions);
 
   // test horizontal and vertical axies
   if (positions[0][0] === positions[1][0] || positions[0][1] === positions[1][1]) return true;
 
-  // from the position of the 1st queen check for 2nd queen
-  // 4 x diagonals
+  // from the position of the 1st queen test diagonals for 2nd queen
+  // we only need to descend because the first queen returned was found by descending rows
 
-
-
-
-  return threat;
+  // diagonal '\' - down (row +) and to the right (col +)
+  for (let row = positions[0][0], col = positions[0][1]; row < 8, col < 8; row ++, col ++) {
+    if (row === positions[1][0] && col === positions[1][1]) return true;
+  }
+  // diagonal '/' - down (row +) and to the left (col -)
+  for (let row = positions[0][0], col = positions[0][1]; row < 8, col > -1; row ++, col --) {
+    if (row === positions[1][0] && col === positions[1][1]) return true;
+  }
+  return false;
 };
 
 // helper function, returns nested array of queen positions
@@ -53,12 +53,17 @@ const findQueens = function(board) {
   return result;
 };
 
-// let whiteQueen = [0, 5];
-// let blackQueen = [5, 0];
+let whiteQueen = [0, 5];
+let blackQueen = [5, 0];
 
-let blackQueen = [3, 3];
-let whiteQueen = [6, 6];
+// let blackQueen = [3, 3];
+// let whiteQueen = [6, 6];
 
+// let whiteQueen = [0, 0];
+// let blackQueen = [5, 7];
+
+// let whiteQueen = [5, 0];
+// let blackQueen = [0, 5];
 
 let generatedBoard = generateBoard(whiteQueen, blackQueen);
 console.table(generatedBoard);
